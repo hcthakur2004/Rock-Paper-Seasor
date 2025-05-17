@@ -83,18 +83,7 @@ const GameBoard = () => {
     playMoveSound();
 
     // Get computer's move
-    let compMove = getComputerMove(move);
-    
-    // Simulate computer thinking in hard mode
-    if (compMove === 'waiting') {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      const counterMove = {
-        rock: 'paper',
-        paper: 'scissors',
-        scissors: 'rock'
-      }[move];
-      compMove = counterMove;
-    }
+    const compMove = getComputerMove(move);
     
     // Set computer's move
     setComputerMove(compMove);

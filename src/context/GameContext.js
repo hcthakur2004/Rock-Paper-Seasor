@@ -75,7 +75,7 @@ export const GameProvider = ({ children }) => {
       .sort((a, b) => b[1] - a[1])[0][0];
   };
 
-  const getComputerMove = (playerHistory) => {
+  const getComputerMove = (playerMove) => {
     const moves = ['rock', 'paper', 'scissors'];
     
     switch (gameMode) {
@@ -83,7 +83,7 @@ export const GameProvider = ({ children }) => {
         return moves[Math.floor(Math.random() * moves.length)];
       
       case 'medium': {
-        const prediction = predictNextMove(playerHistory);
+        const prediction = predictNextMove(stats.moveHistory);
         if (prediction) {
           const counters = {
             rock: 'paper',
@@ -95,9 +95,29 @@ export const GameProvider = ({ children }) => {
         return moves[Math.floor(Math.random() * moves.length)];
       }
       
-      case 'hard':
-        // 30% chance to "cheat" by waiting for player's move
-        return Math.random() < 0.3 ? 'waiting' : moves[Math.floor(Math.random() * moves.length)];
+      case 'hard': {
+        const shouldWait = Math.random() < 0.3;
+        if (shouldWait && playerMove) {
+          // If we're waiting and have the player's move, counter it
+          const counters = {
+            rock: 'paper',
+            paper: 'scissors',
+            scissors: 'rock'
+          };
+          return counters[playerMove];
+        }
+        // Otherwise make a strategic move based on history
+        const prediction = predictNextMove(stats.moveHistory);
+        if (prediction) {
+          const counters = {
+            rock: 'paper',
+            paper: 'scissors',
+            scissors: 'rock'
+          };
+          return Math.random() < 0.8 ? counters[prediction] : moves[Math.floor(Math.random() * moves.length)];
+        }
+        return moves[Math.floor(Math.random() * moves.length)];
+      }
       
       default:
         return moves[Math.floor(Math.random() * moves.length)];
