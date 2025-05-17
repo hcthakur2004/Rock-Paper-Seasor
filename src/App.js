@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { GameProvider } from './context/GameContext';
+import Game from './components/Game';
+import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { useGameContext } from './context/GameContext';
 
-function App() {
+// Theme wrapper component to access context
+const ThemedApp = () => {
+  const { theme, highContrastMode, colorBlindMode } = useGameContext();
+
+  const appTheme = createTheme({
+    palette: {
+      mode: theme,
+      ...(highContrastMode && {
+        contrast: {
+          high: true,
+        },
+      }),
+      ...(colorBlindMode && {
+        success: {
+          main: '#0066FF', // Blue instead of green
+        },
+        error: {
+          main: '#FFB800', // Orange instead of red
+        },
+      }),
+    },
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={appTheme}>
+      <CssBaseline />
+      <Game />
+    </ThemeProvider>
   );
-}
+};
+
+const App = () => {
+  return (
+    <GameProvider>
+      <ThemedApp />
+    </GameProvider>
+  );
+};
 
 export default App;
