@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Rock-Paper-Seasor/static/css/main.93b42e17.css",
+    "main.js": "/Rock-Paper-Seasor/static/js/main.ab4d65fa.js",
+    "index.html": "/Rock-Paper-Seasor/index.html",
+    "main.93b42e17.css.map": "/Rock-Paper-Seasor/static/css/main.93b42e17.css.map",
+    "main.ab4d65fa.js.map": "/Rock-Paper-Seasor/static/js/main.ab4d65fa.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.93b42e17.css",
+    "static/js/main.ab4d65fa.js"
+  ]
+}
