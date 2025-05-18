@@ -156,7 +156,9 @@ export const GameProvider = ({ children }) => {
       const newStats = {
         ...prev,
         totalGames: prev.totalGames + 1,
-        [result + 's']: prev[result + 's'] + 1,
+        wins: result === 'win' ? prev.wins + 1 : prev.wins,
+        losses: result === 'lose' ? prev.losses + 1 : prev.losses,
+        ties: result === 'tie' ? prev.ties + 1 : prev.ties,
         moveHistory: [...prev.moveHistory, playerMove].slice(-20),
         winStreak: result === 'win' ? prev.winStreak + 1 : 0,
       };
